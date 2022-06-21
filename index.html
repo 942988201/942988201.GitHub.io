@@ -5,9 +5,13 @@
 		<title></title>
 		<style type="text/css">
 			*{
-					font-size:1rem
+					font-size:0.2rem
 			}
 		</style>
+		    <meta
+		      name="viewport"
+		      content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0, viewport-fit=cover"
+		    />
 	</head>
 	<body>
 		<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
@@ -36,7 +40,8 @@
 		</script>
 		<script src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.13.42/dingtalk.open.js"></script>
 		<script type="text/javascript">
-		alert(1)
+		
+
 		function saoma(){
 			dd.biz.util.scan({
 			    type: String , // type 为 all、qrCode、barCode，默认是all。
@@ -55,15 +60,18 @@
 			var e = window.event ||e;
 			e.returnValue=("是否确定关闭页面");
 		}
-		document.addEventListener('backbutton', function(e) {
-			alert("不许走")
-			console.log(123)
-		    // 在这里处理你的业务逻辑
-		    e.preventDefault(); 
-			//backbutton事件的默认行为是回退历史记录，如果你想阻止默认的回退行为，那么可以通过preventDefault()实现
-		});
+		dd.ready(function() {
+				document.addEventListener('backbutton', function(e) {
+					alert("不许走")
+				    // 在这里处理你的业务逻辑
+				    e.preventDefault(); 
+					//backbutton事件的默认行为是回退历史记录，如果你想阻止默认的回退行为，那么可以通过preventDefault()实现
+				});
+		})
+		
 		</script>
 		<button onclick="saoma()">扫码</button>
+
 		
 	</body>
 </html>
