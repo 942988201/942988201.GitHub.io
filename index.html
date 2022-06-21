@@ -4,12 +4,28 @@
 		<meta charset="utf-8">
 		<title></title>
 	</head>
-	<body>测试文件测试文件测试文件测试文件测试文件测试文件测试文件测试文件测试文件
+	<body>
+		<script src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.13.42/dingtalk.open.js"></script>
 		<script type="text/javascript">
-			window.onbeforeunload = function(e) {
-				var e = window.event ||e;
-				e.returnValue=("是否确定关闭页面");
-			}
+		function saoma(){
+			dd.biz.util.scan({
+			    type: String , // type 为 all、qrCode、barCode，默认是all。
+			    onSuccess: function(data) {
+			    //onSuccess将在扫码成功之后回调
+			      /* data结构
+			        { 'text': String}
+			      */
+			    },
+			   onFail : function(err) {
+			   }
+			})
+		}
+		window.onbeforeunload = function(e) {
+			var e = window.event ||e;
+			e.returnValue=("是否确定关闭页面");
+		}
 		</script>
+		<button onclick="saoma()">扫码</button>
+		
 	</body>
 </html>
