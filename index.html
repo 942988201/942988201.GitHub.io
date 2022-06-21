@@ -10,6 +10,11 @@
 		</style>
 	</head>
 	<body>
+		<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+		<script>
+		  // VConsole 默认会挂载到 `window.VConsole` 上
+		  var vConsole = new window.VConsole();
+		</script>
 		<script type="text/javascript">
 			 function change() {
 			        var kk = document.documentElement.clientWidth || document.body.clientWidth
@@ -36,6 +41,7 @@
 			dd.biz.util.scan({
 			    type: String , // type 为 all、qrCode、barCode，默认是all。
 			    onSuccess: function(data) {
+					console.log(data)
 			    //onSuccess将在扫码成功之后回调
 			      /* data结构
 			        { 'text': String}
@@ -51,6 +57,7 @@
 		}
 		document.addEventListener('backbutton', function(e) {
 			alert("不许走")
+			console.log(123)
 		    // 在这里处理你的业务逻辑
 		    e.preventDefault(); 
 			//backbutton事件的默认行为是回退历史记录，如果你想阻止默认的回退行为，那么可以通过preventDefault()实现
