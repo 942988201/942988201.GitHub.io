@@ -44,29 +44,38 @@
 
 		function saoma(){
 			dd.biz.util.scan({
-			    type: String , // type 为 all、qrCode、barCode，默认是all。
+			    type: String , 
 			    onSuccess: function(data) {
 					console.log(data)
-			    //onSuccess将在扫码成功之后回调
-			      /* data结构
-			        { 'text': String}
-			      */
+
 			    },
 			   onFail : function(err) {
 			   }
 			})
 		}
-		window.onbeforeunload = function(e) {
-			var e = window.event ||e;
-			e.returnValue=("是否确定关闭页面");
-		}
+
 		dd.ready(function() {
-				document.addEventListener('backbutton', function(e) {
-					alert("不许走")
-				    // 在这里处理你的业务逻辑
-				    e.preventDefault(); 
-					//backbutton事件的默认行为是回退历史记录，如果你想阻止默认的回退行为，那么可以通过preventDefault()实现
-				});
+			const u = navigator.userAgent
+			      const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // 判断是否是 android终端
+			      if (isAndroid) {
+			        document.addEventListener('backbutton', (e) => { //安卓调用方式
+			         e.preventDefault() //阻止返回
+			          //在这里处理你的业务
+			         alert("不许走")
+			        })
+			      } else {
+			        dd.biz.navigation.setLeft({
+			          control: true,
+			          text: '',
+			          onSuccess: (result) => { //IOS调用方法 ios返回不起作用，需要手动让他返回window.history.go(-1)
+			           alert("不许走")
+			          },
+			          onFail(err) {
+			            console.log('返回失败', err)
+			          }
+			        })
+			      }
+
 		})
 		
 		</script>
