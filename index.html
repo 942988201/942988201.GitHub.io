@@ -4,83 +4,91 @@
 		<meta charset="utf-8">
 		<title></title>
 		<style type="text/css">
-			*{
-					font-size:0.2rem
+			* {
+				font-size: 0.2rem
 			}
 		</style>
-		    <meta
-		      name="viewport"
-		      content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0, viewport-fit=cover"
-		    />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0, viewport-fit=cover" />
 	</head>
 	<body>
 		<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
 		<script>
-		  // VConsole 默认会挂载到 `window.VConsole` 上
-		  var vConsole = new window.VConsole();
+			// VConsole 默认会挂载到 `window.VConsole` 上
+			var vConsole = new window.VConsole();
 		</script>
 		<script type="text/javascript">
-			 function change() {
-			        var kk = document.documentElement.clientWidth || document.body.clientWidth
-			        document.documentElement.style.fontSize = kk*100 / 750 + 'px'
-			        console.log('1rem=' + kk * 100 / 750 + 'px')
-			    }
-			 
-			    change()
-			    // 窗口事件
-			    window.onresize = function () {
-			        change()
-			 
-			    }
-			    // 横竖屏事件
-			    window.onorientationchange = function () {
-			        change()
-			    }
-			
+			function change() {
+				var kk = document.documentElement.clientWidth || document.body.clientWidth
+				document.documentElement.style.fontSize = kk * 100 / 750 + 'px'
+				console.log('1rem=' + kk * 100 / 750 + 'px')
+			}
+
+			change()
+			// 窗口事件
+			window.onresize = function() {
+				change()
+
+			}
+			// 横竖屏事件
+			window.onorientationchange = function() {
+				change()
+			}
 		</script>
 		<script src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.13.42/dingtalk.open.js"></script>
 		<script type="text/javascript">
-		
+			function saoma() {
+				dd.biz.util.scan({
+					type: String,
+					onSuccess: function(data) {
+						console.log(data)
 
-		function saoma(){
-			dd.biz.util.scan({
-			    type: String , 
-			    onSuccess: function(data) {
-					console.log(data)
+					},
+					onFail: function(err) {}
+				})
+			}
 
-			    },
-			   onFail : function(err) {
-			   }
+			dd.ready(function() {
+				console.log(123)
+				dd.device.base.getUUID({
+						onSuccess: function(data) {
+							console.log(data)
+						},
+						onFail: function(err) {
+							console.log(" dd.device.base.getUUID")
+						}
+					});
+				const u = navigator.userAgent
+				const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // 判断是否是 android终端
+				if (isAndroid) {
+					document.addEventListener('backbutton', (e) => { //安卓调用方式
+						e.preventDefault() //阻止返回
+						//在这里处理你的业务
+						alert("不许走")
+					})
+				} else {
+					dd.biz.navigation.setLeft({
+						control: true,
+						text: '',
+						onSuccess: (result) => { //IOS调用方法 ios返回不起作用，需要手动让他返回window.history.go(-1)
+							alert("不许走")
+						},
+						onFail(err) {
+							console.log('返回失败', err)
+						}
+					})
+				}
+				dd.runtime.permission.requestAuthCode({
+					corpId: 'ding31f5065adc8a43fe35c2f4657eb6378f', // 企业id
+					onSuccess: function(result) {
+						console.log(result)
+					}
+				})
+
 			})
-		}
-
-		dd.ready(function() {
-			const u = navigator.userAgent
-			      const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // 判断是否是 android终端
-			      if (isAndroid) {
-			        document.addEventListener('backbutton', (e) => { //安卓调用方式
-			         e.preventDefault() //阻止返回
-			          //在这里处理你的业务
-			         alert("不许走")
-			        })
-			      } else {
-			        dd.biz.navigation.setLeft({
-			          control: true,
-			          text: '',
-			          onSuccess: (result) => { //IOS调用方法 ios返回不起作用，需要手动让他返回window.history.go(-1)
-			           alert("不许走")
-			          },
-			          onFail(err) {
-			            console.log('返回失败', err)
-			          }
-			        })
-			      }
-
-		})
-		
 		</script>
 		<button onclick="saoma()">扫码</button>
 
-		
+
 	</body>
 </html>
